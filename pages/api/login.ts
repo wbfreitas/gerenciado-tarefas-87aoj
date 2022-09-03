@@ -17,7 +17,10 @@ const loginEndpoint = async(req : NextApiRequest,
     
 
     if(req.method === 'POST'){
-        const body = req.body as LoginRequest;
+        const body =(typeof req.body == 'string' ? JSON.parse(req.body) : req.body ) as LoginRequest;
+
+       //const body = {"login": "a@a.com", "password": "123456"}
+
         if(!body || !body.login || !body.password){
             return res.status(400).json({ error : 'Favor informar usuário e senha'});
         }
