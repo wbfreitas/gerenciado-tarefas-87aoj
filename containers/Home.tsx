@@ -43,10 +43,6 @@ export const Home : NextPage<AccessTokenProps> = ({setAccessToken}) => {
     }
 
     const salvar = async() => {
-        console.log(!name);
-        console.log(modalPrevisionDateStart);
-        console.log(!name.trim());
-        console.log(!modalPrevisionDateStart.trim());
         
         if(!name || !name.trim() ||  !modalPrevisionDateStart || !modalPrevisionDateStart.trim() ) {
             setError('Favor preencher o formulario');
@@ -63,14 +59,16 @@ export const Home : NextPage<AccessTokenProps> = ({setAccessToken}) => {
            } 
         }
     }
+    
     const closeModal = () => {
         setName('');
         setError('');
         setModalPrevisionDateStart('');
         setModalPrevisionDateEnd('');
+        setShowModal(false);
     }
 
-    useEffect(() =>{
+    useEffect(() => {
         getFilteredList();
     }, [previsionDateStart, previsionDateEnd, status, name]);
 
