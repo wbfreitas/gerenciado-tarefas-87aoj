@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { NextPage } from "next";
-import { SplitButton } from "react-bootstrap";
 
 type HeaderPorps = {
     sair():void;
@@ -17,11 +16,11 @@ export const Headers: NextPage<HeaderPorps> = ({sair, setShowModal}) => {
                 Adicionar Tarefa
             </button>
             <div className="mobile">
-                <span>Ola {userName}</span>
+                <span>Olá {userName}</span>
                 <img src="/img/exit-mobile.svg" alt="Sair" onClick={sair} />
             </div>
             <div className="desktop">
-                <span>Ola {userName}</span>
+                <span>Olá {userName}</span>
                 <img src="/img/exit-desktop.svg" alt="Sair" onClick={sair} />
             </div>
         </div>
