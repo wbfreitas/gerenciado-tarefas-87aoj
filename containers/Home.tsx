@@ -20,11 +20,9 @@ export const Home : NextPage<AccessTokenProps> = ({setAccessToken}) => {
     const [error, setError] = useState('');
     const [name, setName] = useState('');
     const [modalPrevisionDateStart, setModalPrevisionDateStart] = useState('');
-    const [modalPrevisionDateEnd, setModalPrevisionDateEnd] = useState('');
 
     const getFilteredList = async() =>{
         try{
-
             let query = '?status=' + status;
 
             if(previsionDateStart) 
@@ -48,15 +46,15 @@ export const Home : NextPage<AccessTokenProps> = ({setAccessToken}) => {
             setError('Favor preencher o formulario');
             return;
         }
-        const body = {name, previsionDate: previsionDateStart}   
+        const body = {name, previsionDate: modalPrevisionDateStart}   
         try {
             await executeRequest('task', 'POST', body);
             await getFilteredList();
             closeModal();
         } catch (e: any) {
-           if(e?.response?.data?.error) {
+        if(e?.response?.data?.error) {
             setError(e?.response?.data?.error);
-           } 
+        } 
         }
     }
     
@@ -64,13 +62,12 @@ export const Home : NextPage<AccessTokenProps> = ({setAccessToken}) => {
         setName('');
         setError('');
         setModalPrevisionDateStart('');
-        setModalPrevisionDateEnd('');
         setShowModal(false);
     }
 
     useEffect(() => {
         getFilteredList();
-    }, [previsionDateStart, previsionDateEnd, status, name]);
+    }, [previsionDateStart, status, name]);
 
 
     const sair = () =>{
