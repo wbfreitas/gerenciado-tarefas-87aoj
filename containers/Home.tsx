@@ -67,6 +67,7 @@ export const Home : NextPage<AccessTokenProps> = ({setAccessToken}) => {
 
     useEffect(() => {
         getFilteredList();
+        
     }, [previsionDateStart, status, name]);
 
 
