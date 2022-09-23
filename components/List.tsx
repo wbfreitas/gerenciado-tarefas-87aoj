@@ -22,7 +22,7 @@ export const List: NextPage<ListProps> = ({tasks, getFilteredList}) => {
     const [modalPrevisionDateStart, setModalPrevisionDateStart] = useState('');
     const [modalPrevisionDateEnd, setModalPrevisionDateEnd] = useState<string | undefined>('');
 
-    const selectToEdit = (task: Task) =>{
+    const selectToEdit = (task: Task) => {
         setId(task._id);
         setName(task.name);
         setModalPrevisionDateStart(moment(task.previsionDate).format('yyyy-MM-DD'));
@@ -57,7 +57,7 @@ const inputData = (value: string | undefined, praceHolder: string,
         placeholder='Data de previsão'
         onFocus={e => e.target.type = 'date'}
         onBlur={e => value ? e.target.type = 'date' : e.target.type = 'text'}
-        value={value}
+        value={value || ''}
         onChange={e => change(e.target.value)}
     />
 
@@ -105,8 +105,8 @@ const inputData = (value: string | undefined, praceHolder: string,
                     value={name}
                     onChange={e => setName(e.target.value)}
                     />
-               {inputData(modalPrevisionDateStart, 'Data de previsão', setModalPrevisionDateStart)}
-               {inputData(modalPrevisionDateEnd, 'Data de conclusao', setModalPrevisionDateEnd)}
+            {inputData(modalPrevisionDateStart, 'Data de previsão', setModalPrevisionDateStart)}
+            {inputData(modalPrevisionDateEnd, 'Data de conclusao', setModalPrevisionDateEnd)}
             </Modal.Body>
             <Modal.Footer>
                 <div className='button col-12'>

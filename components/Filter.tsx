@@ -17,9 +17,30 @@ export const Filter: NextPage<FilterProps> = ({
 
     const [showFilters, setShowFilters] = useState(false);
 
-    return (
-        <div className="container-filtros">
-            <div className="title">
+    const filtroMobile = () =>  { 
+        return showFilters && <div className="filtrosMobile">
+                            <div>
+                                <label>Data prevista de conclusão:</label>
+                                <input type="date" value={periodoDe} onChange={e => setPeriodoDe(e.target.value)}></input>
+                            </div>
+                            <div>
+                                <label>Até:</label>
+                                <input type="date" value={periodoAte} onChange={e => setPeriodoAte(e.target.value)}></input>
+                            </div>
+                            <div className="line"></div>
+                            <div>
+                                <label>Status</label>
+                                <select value={status} onChange={e => setStatus(e.target.value)}>
+                                        <option value={0}>Todas</option>
+                                        <option value={1}>Ativas</option>
+                                        <option value={2}>Concluidas</option>
+                                </select>
+                            </div>
+                        </div>
+    }
+
+    const filtroDesktop = () => 
+        <div className="title">
                 <span>Tarefas</span>
                 <img src="/img/filter.svg" alt="filtra tarefas" onClick={e => setShowFilters(!showFilters)} />
                 <div className="form">
@@ -43,27 +64,12 @@ export const Filter: NextPage<FilterProps> = ({
                 </div>
             </div>
 
-                    { showFilters && <div className="filtrosMobile">
-                            <div>
-                                <label>Data prevista de conclusão:</label>
-                                <input type="date" value={periodoDe} onChange={e => setPeriodoDe(e.target.value)}></input>
-                            </div>
-                            <div>
-                                <label>Até:</label>
-                                <input type="date" value={periodoAte} onChange={e => setPeriodoAte(e.target.value)}></input>
-                            </div>
-                            <div className="line"></div>
-                            <div>
-                                <label>Status</label>
-                                <select value={status} onChange={e => setStatus(e.target.value)}>
-                                        <option value={0}>Todas</option>
-                                        <option value={1}>Ativas</option>
-                                        <option value={2}>Concluidas</option>
-                                </select>
-                            </div>
-                        </div>
-                    }
-            </div>
-
+    return (
+        <div className="container-filtros">
+            <>
+                {filtroDesktop()}
+                {filtroMobile()}
+            </>
+        </div>
     );
 }
