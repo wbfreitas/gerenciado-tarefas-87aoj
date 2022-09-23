@@ -5,3 +5,8 @@ $lightGreyColor-with-opacity: #FFEBF280;
 $mediumGreyColor: #91A3AD;
 $darkGreyColor: #575757;
 $errorColor: #ED421C;
+$DesktopSize: 1024px;
+
+@mixin desktop {
+    @media (min-width: $DesktopSize) { @content; }
+  }

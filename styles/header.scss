@@ -41,7 +41,7 @@
         }
     }
 
-    @media screen and (min-width:1024px) {
+    @include desktop {
         .mobile {
             display: none;
         }

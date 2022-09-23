@@ -75,7 +75,7 @@
         margin-top: 30px;
     }
 
-    @media screen and (min-width:1024px) {
+    @include desktop { 
         width: 100%;
         display: flex;
         flex-direction: row;

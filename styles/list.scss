@@ -1,4 +1,4 @@
-@import './configs.scss';
+@import './config.scss';
 
 .container-listagem{
     display: flex;
@@ -25,7 +25,9 @@
         text-align: center;
     }
 
-    @media screen and (min-width:1024px) {
+    
+
+@include desktop {
         img {
             width: 500px;
         }
