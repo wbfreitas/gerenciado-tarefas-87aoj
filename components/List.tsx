@@ -37,13 +37,41 @@ export const List: NextPage<ListProps> = ({tasks, getFilteredList}) => {
         setShowModal(false);
     }
 
+const listaDeTarefas = () => 
+    <div className={"container-listagem" + (tasks && tasks.length > 0 ? "" : " vazia")}>
+    {
+        tasks &&tasks.length > 0 ? 
+            tasks.map(t => <Item key={t._id} task={t} selectTaskToEdit={selectToEdit} /> )
+        : <>
+            <img src="img/not-found.svg" alt="Nenhuma atividade encontrada"/>
+            <p>Você ainda não possui tarefas cadastradas!</p>
+        </>
+    }
+
+</div>
+
+const inputData = (value: string | undefined, praceHolder: string,
+        change: (s: string) => void) =>
+    <input
+        type={value ? 'date' : 'text'}
+        placeholder='Data de previsão'
+        onFocus={e => e.target.type = 'date'}
+        onBlur={e => value ? e.target.type = 'date' : e.target.type = 'text'}
+        value={value}
+        onChange={e => change(e.target.value)}
+    />
+
+    const validaFormularioPreenchido = () => {
+        if(!name || !name.trim() || !modalPrevisionDateStart ||
+            !modalPrevisionDateStart.trim() || !_id || !_id.trim()){
+            throw({customError: 'Favor preencher o formulário'});
+        } 
+    }
+
     const atualizar = async() => {
         try{
-            if(!name || !name.trim() || !modalPrevisionDateStart ||
-                !modalPrevisionDateStart.trim() || !_id || !_id.trim()){
-                setError('Favor preencher o formulário');
-                return;
-            }
+
+            validaFormularioPreenchido();
 
             const body = {
                 name,
@@ -55,29 +83,13 @@ export const List: NextPage<ListProps> = ({tasks, getFilteredList}) => {
             await getFilteredList();
             closeModal();
         }catch(e : any){
-            console.log(e);
-            if(e?.response?.data?.error){
-                setError(e?.response?.data?.error);
-            }else{
-                setError('Ocorreu erro ao tentar cadastrar tarefa');
-            }
+            setError(e?.response?.data?.error || e?.customError || 'Ocorreu erro ao tentar cadastrar tarefa');
         }
     }
 
-    
     return (
         <>
-        <div className={"container-listagem" + (tasks && tasks.length > 0 ? "" : " vazia")}>
-            {
-                tasks &&tasks.length > 0 ? 
-                    tasks.map(t => <Item key={t._id} task={t} selectTaskToEdit={selectToEdit} /> )
-                : <>
-                    <img src="img/not-found.svg" alt="Nenhuma atividade encontrada"/>
-                    <p>Você ainda não possui tarefas cadastradas!</p>
-                </>
-            }
-        
-        </div>
+        {listaDeTarefas()} 
 
         <Modal 
             show={showModal}
@@ -108,15 +120,3 @@ export const List: NextPage<ListProps> = ({tasks, getFilteredList}) => {
     </>    
     );
 }
-
-const inputData = (value: string | undefined, praceHolder: string,
-        setModalPrevisionDateStart: (s: string) => void) =>
-     <input
-    type={value ? 'date' : 'text'}
-    placeholder='Data de previsão'
-    onFocus={e => e.target.type = 'date'}
-    onBlur={e => value ? e.target.type = 'date' : e.target.type = 'text'}
-    value={value}
-    onChange={e => setModalPrevisionDateStart(e.target.value)}
-    />
-
