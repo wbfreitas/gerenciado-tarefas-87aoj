@@ -22,13 +22,19 @@ export const List: NextPage<ListProps> = ({tasks, getFilteredList}) => {
     const [modalPrevisionDateStart, setModalPrevisionDateStart] = useState('');
     const [modalPrevisionDateEnd, setModalPrevisionDateEnd] = useState<string | undefined>('');
 
-
     const selectToEdit = (task: Task) =>{
         setId(task._id);
         setName(task.name);
         setModalPrevisionDateStart(moment(task.previsionDate).format('yyyy-MM-DD'));
         setModalPrevisionDateEnd(task.finishDate);
         setShowModal(true);
+    }
+
+    const closeModal = async() => {
+        setError('');
+        setName('');
+        setModalPrevisionDateStart('');
+        setShowModal(false);
     }
 
     const atualizar = async() => {
@@ -58,12 +64,6 @@ export const List: NextPage<ListProps> = ({tasks, getFilteredList}) => {
         }
     }
 
-    const closeModal = async() => {
-        setError('');
-        setName('');
-        setModalPrevisionDateStart('');
-        setShowModal(false);
-    }
     
     return (
         <>
@@ -93,24 +93,8 @@ export const List: NextPage<ListProps> = ({tasks, getFilteredList}) => {
                     value={name}
                     onChange={e => setName(e.target.value)}
                     />
-
-                <input
-                    type={modalPrevisionDateStart ? 'date' : 'text'}
-                    placeholder='Data de previsão'
-                    onFocus={e => e.target.type = 'date'}
-                    onBlur={e => modalPrevisionDateStart ? e.target.type = 'date' : e.target.type = 'text'}
-                    value={modalPrevisionDateStart}
-                    onChange={e => setModalPrevisionDateStart(e.target.value)}
-                    />
-
-                <input
-                    type={modalPrevisionDateEnd ? 'date' : 'text'}
-                    placeholder='Data de conclusao'
-                    onFocus={e => e.target.type = 'date'}
-                    onBlur={e => modalPrevisionDateEnd ? e.target.type = 'date' : e.target.type = 'text'}
-                    value={modalPrevisionDateEnd}
-                    onChange={e => setModalPrevisionDateEnd(e.target.value)}
-                    />
+               {inputData(modalPrevisionDateStart, 'Data de previsão', setModalPrevisionDateStart)}
+               {inputData(modalPrevisionDateEnd, 'Data de conclusao', setModalPrevisionDateEnd)}
             </Modal.Body>
             <Modal.Footer>
                 <div className='button col-12'>
@@ -124,3 +108,15 @@ export const List: NextPage<ListProps> = ({tasks, getFilteredList}) => {
     </>    
     );
 }
+
+const inputData = (value: string | undefined, praceHolder: string,
+        setModalPrevisionDateStart: (s: string) => void) =>
+     <input
+    type={value ? 'date' : 'text'}
+    placeholder='Data de previsão'
+    onFocus={e => e.target.type = 'date'}
+    onBlur={e => value ? e.target.type = 'date' : e.target.type = 'text'}
+    value={value}
+    onChange={e => setModalPrevisionDateStart(e.target.value)}
+    />
+
