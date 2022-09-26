@@ -1,6 +1,15 @@
 @import './config.scss';
 
 .container-login {
+
+    .sign-in {
+        text-align: center;
+        display: block;
+        margin-top: 20px;
+        color: $primaryColor;
+        text-decoration: underline;
+    }
+
     .logo {
         width: 178.35px;
         display: block;
